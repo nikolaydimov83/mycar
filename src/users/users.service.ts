@@ -17,6 +17,10 @@ export class UsersService {
     async findAll() {
         return await this.repo.find()
     }
+    async findBy(userProp:Partial<User>){
+        return await this.repo.findOneBy(userProp)
+    }
+ 
     async update(id: number, newUserProps: Partial<User>) {
         let user = await this.findOne(id)
         if (!user) {
