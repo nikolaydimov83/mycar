@@ -8,18 +8,22 @@ import {
     Post,
     Put,
     UseInterceptors,
-    Session
+    Session,
+    UseGuards
 } from '@nestjs/common';
 import { User } from './user.entity';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { UsersService } from './users.service';
 import { Serialize, SerializeInterceptors } from 'src/interceptors/serialize.interceptors';
-import { SendUserInfoDto } from './dtos/send-user-info.dto copy';
+import { CurrentUserDto } from './dtos/current-user.dto';
 import { AuthService } from './auth.service';
-
+import { CurrentUser } from './decorators/user.decorators';
+import { CurrentUserInterceptors } from 'src/interceptors/user.interceptors';
+import { AuthGuard } from 'src/guards/auth.guard';
+@UseInterceptors(CurrentUserInterceptors)
 @Controller('auth')
-@Serialize(SendUserInfoDto)
+@Serialize(CurrentUserDto)
 export class UsersController {
     constructor(
         private userService: UsersService,
@@ -28,9 +32,12 @@ export class UsersController {
     setColor(@Param('color') color: string, @Session() session: any) {
         session.color = color
     }
-    @Get('/colors')
-    getColor(@Session() session: any) {
-        return session.color
+    @UseGuards(AuthGuard)
+    @Get('/whoami')
+    async getColor(@CurrentUser() currentUser:any) {
+       
+        return await currentUser
+        
     }
     @Post('/signup')
     async createUser(@Body() body: CreateUserDto, @Session() session:any) {
@@ -44,8 +51,11 @@ export class UsersController {
         session.userId=user.id;
         return user
     }
+    @Post('/signout')
+    signout(@Session() session:any){
+        session.userId=null;
+    }
     @Get('/findUserById/:id')
-
     async findUserById(@Param('id') id: number) {
         return await this.userService.findOne(id);
     }

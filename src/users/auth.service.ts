@@ -27,8 +27,7 @@ export class AuthService {
         }
         const [salt, hashedPassFormDB] = user.password.split('.');
         const hashedPass = ((await scrypt(password, salt, 32)) as Buffer).toString('hex');
-        console.log(hashedPass)
-        console.log(salt)
+
         if (hashedPass !== hashedPassFormDB) {
             throw new BadRequestException('Wrong username or password!')
         }
