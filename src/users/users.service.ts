@@ -14,7 +14,7 @@ export class UsersService {
         if (!id){
             return null
         }
-        return await this.repo.findOneBy({ id: id })
+        return await this.repo.findOneBy({ id })
     }
     async findAll() {
         return await this.repo.find()
