@@ -6,7 +6,7 @@ import { AppModule } from '../src/app.module';
 // 1. Import cookie-session (or whichever package you use in main.ts)
 import cookieSession from 'cookie-session'; 
 
-describe('AppController (e2e)', () => {
+describe('Authentication controllers (e2e)', () => {
   let app: INestApplication<App>;
 
   beforeEach(async () => {
@@ -26,11 +26,16 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('Sign up with user that does not exist', () => {
     return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+      .post('/auth/signup')
+      .send({email:'ger@abv.bg',password:'1234'})
+      .expect(201)
+      .then((data)=>{
+        const {id,email}=data.body
+        expect(id).toBeDefined()
+        expect(email).toEqual('ger@abv.bg')
+      })
   });
 
   afterEach(async () => {

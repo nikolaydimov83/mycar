@@ -3,6 +3,7 @@ import { AuthService } from "./auth.service"
 import { UsersService } from "./users.service";
 import { BadRequestException } from "@nestjs/common";
 import { User } from "./user.entity";
+import { PasswordUtils } from "./utils/password-utils";
 let service: AuthService;
 let fakeUserService: Partial<UsersService>
 const users:User[]=[]
@@ -25,7 +26,8 @@ describe('Testing Authentication service', () => {
                     {
                         provide: UsersService,
                         useValue: fakeUserService
-                    }
+                    },
+                    PasswordUtils
 
                 ]
         }).compile();

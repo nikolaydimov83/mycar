@@ -6,11 +6,12 @@ import { User } from './user.entity';
 import { AuthService } from './auth.service';
 import { CurrentUserInterceptors } from 'src/interceptors/user.interceptors';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { PasswordUtils } from './utils/password-utils';
 
 @Module({
   imports:[TypeOrmModule.forFeature([User])],
   controllers: [UsersController],
-  providers: [UsersService, AuthService, {
+  providers: [UsersService, AuthService, PasswordUtils,{
     provide:APP_INTERCEPTOR,
     useClass:CurrentUserInterceptors
   }]
