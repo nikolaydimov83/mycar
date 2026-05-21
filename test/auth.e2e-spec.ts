@@ -1,15 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import request from 'supertest';
 import { App } from 'supertest/types';
 import { AppModule } from '../src/app.module';
-// 1. Import cookie-session (or whichever package you use in main.ts)
-import cookieSession from 'cookie-session';
-import { response } from 'express';
-import { CurrentUserInterceptors } from 'src/interceptors/user.interceptors';
-import { UsersService } from 'src/users/users.service';
-import { Repository } from 'typeorm';
-import { User } from 'src/users/user.entity';
 
 describe('Authentication controllers (e2e)', () => {
   let app: INestApplication<App>;
@@ -20,18 +13,7 @@ describe('Authentication controllers (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
-
-    // 2. Add the cookie-session middleware matching your main.ts setup!
-    app.use(
-      cookieSession({
-        keys: ['dgbasjbd22bnbs'], // This matches your app setup config
-      }),
-    );
-    const usersService = moduleFixture.get(UsersService);
-
-    // 2. Pass that working instance into your interceptor
-    app.useGlobalInterceptors(new CurrentUserInterceptors(usersService));
-
+    app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
     await app.init();
   });
 
@@ -85,14 +67,15 @@ describe('Authentication controllers (e2e)', () => {
         const { id, email } = data.body
         expect(id).toBeDefined()
         expect(email).toEqual('ger@abv.bg')
-        const cookie = (data.get('Set-Cookie'))
-        expect(cookie).toBeDefined()
-        if (cookie) {
+        const rawCookie = data.get('Set-Cookie');
+        expect(rawCookie).toBeDefined();
+        if (rawCookie) {
+          const cookie = rawCookie.map(c => c.split(';')[0]).join('; ');
           const { body } = await request(app.getHttpServer())
             .get('/auth/whoami')
             .set('Cookie', cookie)
-            .expect(200)
-          expect(body.email).toEqual('ger@abv.bg')
+            .expect(200);
+          expect(body.email).toEqual('ger@abv.bg');
         }
 
 
