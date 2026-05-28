@@ -36,7 +36,7 @@ export class UsersController {
     @Get('/whoami')
     async getColor(@CurrentUser() currentUser:any) {
        
-        return await currentUser
+        return await currentUser;
         
     }
     @Post('/signup')
