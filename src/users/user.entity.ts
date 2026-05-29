@@ -12,4 +12,7 @@ export class User{
     password:string
     @OneToMany(()=>Report, (report)=>report.user)
     reports:Report[]
+    
+    @Column({default:true})
+    admin:Boolean
 }

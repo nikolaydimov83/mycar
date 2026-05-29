@@ -29,7 +29,10 @@ export class ReportsService {
         if (!id) {
             return null
         }
-        return await this.repo.findOneBy({ id })
+        return await this.repo.findOne({ 
+            where:{id},
+            relations:['user']
+         })
     }
     async findByPlateNumber(carPlateNumber: string) {
         if (!carPlateNumber) {
@@ -55,10 +58,9 @@ export class ReportsService {
             throw new NotFoundException('Report not found');
             // In NestJS, you'd usually use: throw new NotFoundException('User not found');
         }
-        console.log('New report props: ', newReportProps)
-        console.log('Report: ',report)
+
         report = {...report, ...newReportProps}
-        console.log(report)
+      
         return await this.repo.save(report)
     }
     async delete(id: number) {
