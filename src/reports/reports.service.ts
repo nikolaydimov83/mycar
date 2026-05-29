@@ -8,9 +8,9 @@ import { User } from 'src/users/user.entity';
 @Injectable()
 export class ReportsService {
     constructor(@InjectRepository(Report) private repo: Repository<Report>) { }
-    async create(reportObject: CreateReportDto,user:User) {
+    async create(reportObject: CreateReportDto, user: User) {
         const { price, carPlateNumber, mark, lng, lat, mileage } = reportObject
-        
+
         const report = this.repo
             .create(
                 {
@@ -24,11 +24,12 @@ export class ReportsService {
                 });
         return await this.repo.save(report);
     }
-    async findById(id: number) {
+
+    async findByOneId(id: number) {
         if (!id) {
             return null
         }
-        return await this.repo.findBy({ id })
+        return await this.repo.findOneBy({ id })
     }
     async findByPlateNumber(carPlateNumber: string) {
         if (!carPlateNumber) {
@@ -40,7 +41,7 @@ export class ReportsService {
         return await this.repo.find()
     }
     async update(id: number, newReportProps: Partial<Report>) {
-        let report = await this.findById(id)
+        let report = await this.findByOneId(id)
         if (!report) {
             throw new NotFoundException('Report not found');
             // In NestJS, you'd usually use: throw new NotFoundException('User not found');
@@ -48,8 +49,20 @@ export class ReportsService {
         Object.assign(report, newReportProps)
         return await this.repo.save(report)
     }
+    async updateReportprops(id: number, newReportProps: Partial<Report>) {
+        let report = (await this.findByOneId(id))
+        if (!report) {
+            throw new NotFoundException('Report not found');
+            // In NestJS, you'd usually use: throw new NotFoundException('User not found');
+        }
+        console.log('New report props: ', newReportProps)
+        console.log('Report: ',report)
+        report = {...report, ...newReportProps}
+        console.log(report)
+        return await this.repo.save(report)
+    }
     async delete(id: number) {
-        let report = await this.findById(id)
+        let report = await this.findByOneId(id)
         if (!report) {
             throw new NotFoundException('Report not found');
             // In NestJS, you'd usually use: throw new NotFoundException('User not found');

@@ -40,7 +40,7 @@ describe('Authentication controllers (e2e)', () => {
             if (rawCookie) {
               // Join the cookies together into a single header string: "session=...; session.sig=..."
               const cookieHeader = rawCookie.map(c => c.split(';')[0]).join('; ');
-              console.log(cookieHeader)
+          
               const { body } = await request(app.getHttpServer())
                 .get('/auth/whoami')
                 .set('Cookie', cookieHeader) // Pass both session AND session.sig

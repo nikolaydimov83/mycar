@@ -15,7 +15,10 @@ describe('Testing Authentication service', () => {
                 return Promise.resolve(user[0])
             },
             create: (email: string, password: string) => {
-                users.push({email,password,id:users.length+1})
+                users.push({
+                    email, password, id: users.length + 1,
+                    reports: []
+                })
                 return Promise.resolve(users[users.length-1])
             }
         }

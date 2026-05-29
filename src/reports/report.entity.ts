@@ -6,6 +6,9 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne } f
 export class Report {
     @PrimaryGeneratedColumn()
     id: number
+    
+    @Column({default:false})
+    approved:boolean
 
     @Column()
     price: number
@@ -27,7 +30,11 @@ export class Report {
 
     @CreateDateColumn()
     createDate: Date
+    
     @ManyToOne(()=>User, (user)=>user.reports)
     user:User
+
+
+
 
 }
