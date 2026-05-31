@@ -61,7 +61,7 @@ describe('Testing Authentication service', () => {
         await expect(service.signin('niki@abv.bg', '12345')).rejects.toThrow(BadRequestException)
     })
     it('cannot sign a user with incorrect email', async () => {
-        console.log(users)
+        
         //fakeUserService.findBy = (userProp) => Promise.resolve({ id: 1, email: 'niki@abv.bg', password: "29b8791fce39d576.d50208a436705be6ce6a6984b52ba9935869e0403eb6e6b18c61c100ca0323f1" })
         await expect(service.signin('kiki@abv.bg', '1234')).rejects.toThrow(BadRequestException)
     })    
