@@ -1,4 +1,5 @@
-import { IsAlphanumeric, IsDefined, IsLatitude, IsLongitude, IsNumberString, IsOptional } from "class-validator"
+import { Type } from "class-transformer"
+import { IsAlphanumeric, IsDefined, IsLatitude, IsLongitude, isNumber, IsNumber, IsNumberString, IsOptional, IsString, Max, Min } from "class-validator"
 
 
 export class CreateReportDto {
@@ -8,15 +9,25 @@ export class CreateReportDto {
     @IsAlphanumeric()
     carPlateNumber: string
 
-    @IsDefined()
+    @IsString()
     mark: string
 
-    @IsNumberString()
+    @IsString()
+    model: string
+
+    @IsLongitude()
     lng: number
 
-    @IsNumberString()
-    lat:number
+    @IsLatitude()
+    lat: number
 
-    @IsNumberString()
-    mileage:number
+    @Type(()=>Number)
+    @IsNumber()
+    mileage: number
+
+    @Type(()=>Number)
+    @IsNumber()
+    @Min(1930)
+    @Max(2026)
+    year: number
 }

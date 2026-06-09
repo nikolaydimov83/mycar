@@ -10,18 +10,9 @@ export class ReportsService {
     constructor(@InjectRepository(Report) private repo: Repository<Report>) { }
     async create(reportObject: CreateReportDto, user: User) {
         const { price, carPlateNumber, mark, lng, lat, mileage } = reportObject
-
+        
         const report = this.repo
-            .create(
-                {
-                    price,
-                    carPlateNumber,
-                    mark,
-                    lng,
-                    lat,
-                    mileage,
-                    user
-                });
+            .create({...reportObject,user});
         return await this.repo.save(report);
     }
 

@@ -18,7 +18,7 @@ export class ReportsController {
     @Serialize(ReportDto)
     @Post('/create')
     async createReport(@Body() body: CreateReportDto, @CurrentUser() user: User) {
-
+        console.log(user)
         return await this.reportsService
             .create(body, user);
     }
