@@ -38,7 +38,7 @@ export class ReportsService {
         let report = await this.findByOneId(id)
         if (!report) {
             throw new NotFoundException('Report not found');
-            // In NestJS, you'd usually use: throw new NotFoundException('User not found');
+            
         }
         Object.assign(report, newReportProps)
         return await this.repo.save(report)
