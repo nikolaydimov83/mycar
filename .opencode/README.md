@@ -8,7 +8,7 @@
 
 **AI agents that learn YOUR coding patterns and generate matching code every time.**
 
-🎯 **Pattern Control** - Define your patterns once, AI uses them forever .
+🎯 **Pattern Control** - Define your patterns once, AI uses them forever
 ✋ **Approval Gates** - Review and approve before execution  
 🔁 **Repeatable Results** - Same patterns = Same quality code  
 📝 **Editable Agents** - Full control over AI behavior  
