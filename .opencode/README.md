@@ -2,7 +2,7 @@
 
 ![OpenAgents Control Hero](docs/images/hero-image.png)
 
-# OpenAgents Control (OAC)
+# OpenAgents Control (OAC).
 
 ### Control your AI patterns. Get repeatable results.
 
