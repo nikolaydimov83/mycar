@@ -8,11 +8,11 @@
 
 **AI agents that learn YOUR coding patterns and generate matching code every time.**
 
-🎯 **Pattern Control** - Define your patterns once, AI uses them forever
+🎯 **Pattern Control** - Define your patterns once, AI uses them forever.
 ✋ **Approval Gates** - Review and approve before execution  
 🔁 **Repeatable Results** - Same patterns = Same quality code  
 📝 **Editable Agents** - Full control over AI behavior  
-👥 **Team-Ready** - Everyone uses the same patterns
+👥 **Team-Ready** - Everyone uses the same patterns.
 
 **Multi-language:** TypeScript • Python • Go • Rust  • C# • Any language*  
 **Model Agnostic:** Claude • GPT • Gemini • MiniMax • Local models
